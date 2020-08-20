@@ -17,18 +17,18 @@ class DrawMenu extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(Icons.star,color: Colors.red,size: 24,),
-                title: Text('推荐',style: itemStyle(),),
+                title: Text('图片流',style: itemStyle(),),
                 onTap: () {
                   Navigator.pop(context);
-                  redirect('tyfapp://homepage');
+                  redirect('tyfapp://imgflow');
                 },
               ),
               ListTile(
                 leading: Icon(Icons.favorite,color: Colors.red,size: 24,),
-                title: Text('收藏',style: itemStyle(),),
+                title: Text('单图信息',style: itemStyle(),),
                 onTap: () {
                   Navigator.pop(context);
-                  redirect('https://dart.cn/codelabs/dart-cheatsheet');
+                  redirect('tyfapp://singlepage');
                 },
               ),
               ListTile(

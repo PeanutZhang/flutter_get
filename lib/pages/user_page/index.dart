@@ -8,6 +8,7 @@ class UserIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('userPage build--');
     Map userInfo =
         JsonConfig.objectToMap(ModalRoute.of(context).settings.arguments);
     // TODO: implement build

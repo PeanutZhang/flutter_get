@@ -4,7 +4,9 @@ import 'package:flutter_exercise/pages/common/web_view_page.dart';
 import 'package:flutter_exercise/pages/home_page/index.dart';
 import 'package:flutter_exercise/pages/user_page/index.dart';
 import 'package:flutter_exercise/util/struct/router_struct.dart';
-
+import 'package:flutter_exercise/pages/article_detail/index.dart';
+import 'package:flutter_exercise/pages/home_page/img_flow.dart';
+import 'package:flutter_exercise/pages/home_page/single.dart';
 /// 处理APP内的跳转
 /// action mapping
 const Map<String, List<String>> paramsMapping = {
@@ -19,7 +21,11 @@ const Map<String, List<String>> paramsMapping = {
 const Map<String, RouterStruct> routerMapping = {
   'homepage': RouterStruct(HomeIndex(), 0, null),
   'userpage': RouterStruct(UserIndex(), 2, ['userId']),
-  'default': RouterStruct(HomeIndex(), 0, null)
+  'contentpage':RouterStruct(ArticleDetailIndex(),-1, ['articleId']),
+  'default': RouterStruct(HomeIndex(), 0, null),
+  'imgflow':RouterStruct(ImgFlowPageIndex(),-1,null),
+  'singlepage':RouterStruct(SinglePageIndex(),-1,null)
+
 };
 
 class Router {
@@ -80,7 +86,7 @@ class Router {
 
     Map<String, dynamic> urlParseRes = _parseUrl(url);
     String act = urlParseRes['action'].toString();
-    print('action: $act');
+    print('action  open action act=====: $act');
     if (act == '/') return -1;
     int entranceIndex = routerMapping[act].entrancePageIndex;
     if (entranceIndex > notEntrancPageIndex) {
@@ -100,6 +106,7 @@ class Router {
   Widget getPageByRouter(String pageName) {
     Widget pageWidget =
         routerMapping[pageName].widget ?? routerMapping['default'].widget;
+    return pageWidget;
   }
 
 
@@ -115,10 +122,11 @@ class Router {
     });
 
 
-    return {
-      'homepage': (context) => _buildPage(HomeIndex()),
-      'userpage': (context) => _buildPage(UserIndex())
-    };
+    return routerInfo;
+//      {
+//      'homepage': (context) => _buildPage(HomeIndex()),
+//      'userpage': (context) => _buildPage(UserIndex())
+//    };
   }
 
   Widget _buildPage(Widget page) {
@@ -156,9 +164,17 @@ class Router {
     List<String> paramsStrArr = paramStr.split('&');
     for (String singleParamsStr in paramsStrArr) {
       List<String> singleParamsArr = singleParamsStr.split('=');
-      if (paramsMapping[action].indexOf(singleParamsArr[0]) > -1) {
-        params[singleParamsArr[0]] = singleParamsArr[1];
+
+      if(routerMapping[action].params !=null){
+
+        List<String> paramsList = routerMapping[action].params;
+
+        if (paramsList.indexOf(singleParamsArr[0]) > -1) {
+          params[singleParamsArr[0]] = singleParamsArr[1];
+        }
       }
+
+
     }
     return {'action': action, 'params': params};
   }
